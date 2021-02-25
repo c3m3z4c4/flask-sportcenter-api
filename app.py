@@ -62,7 +62,7 @@ def get_article_by_sku(sku):
     get_article = Article.query.get(sku)
     article_schema = ArticleSchema()
     article = article_schema.dump(get_article)
-    return make_response(jsonify({"article": article}))
+    return make_response(jsonify({article}))
 
 
 @app.route('/articles/<sku>', methods=['PUT'])
