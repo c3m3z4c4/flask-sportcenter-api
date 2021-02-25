@@ -99,7 +99,7 @@ def create_article():
     article_schema = ArticleSchema()
     article = article_schema.load(data)
     result = article_schema.dump(article.create())
-    return make_response(jsonify({"article": result}), 200)
+    return make_response(jsonify({result}), 200)
 
 
 if __name__ == "__main__":
