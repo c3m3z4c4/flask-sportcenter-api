@@ -54,7 +54,7 @@ def index():
     get_articles = Article.query.all()
     article_schema = ArticleSchema(many=True)
     articles = article_schema.dump(get_articles)
-    return make_response(jsonify({"article": articles}))
+    return make_response(jsonify({articles}))
 
 
 @app.route('/articles/<sku>', methods=['GET'])
@@ -82,7 +82,7 @@ def update_article_by_sku(sku):
     article_schema = ArticleSchema(
         only=['sku', 'article', 'description', 'price', 'stock'])
     article = article_schema.dump(get_article)
-    return make_response(jsonify({"article": article}))
+    return make_response(jsonify({article}))
 
 
 @app.route('/articles/<sku>', methods=['DELETE'])
