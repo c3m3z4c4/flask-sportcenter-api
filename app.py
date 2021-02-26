@@ -59,7 +59,7 @@ def create_article():
 @app.route('/articles', methods=['GET'])
 def get_articles():
     all_articles = Article.query.all()
-    result = article_schema.dump(all_articles)
+    result = articles_schema.dump(all_articles)
     return jsonify(result)
 
 
