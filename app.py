@@ -14,6 +14,7 @@ app.secret_key = 'mysecretkey'
 
 
 class Article(db.Model):
+    __tablename__ = "articles"
     sku = db.Column(db.Integer, primary_key=True)
     article = db.Column(db.String(70))
     description = db.Column(db.String(100))
