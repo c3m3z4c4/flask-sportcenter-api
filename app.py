@@ -9,14 +9,21 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
+app.secret_key = 'mysecretkey'
 ###Models####
 
 
 class Article(db.Model):
     __tablename__ = "articles"
+<<<<<<< HEAD
     sku = db.Column(db.Integer, primary_key=True)
     article = db.Column(db.String(70))
     description = db.Column(db.String(100))
+=======
+    sku = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    article = db.Column(db.String(255))
+    description = db.Column(db.String(255))
+>>>>>>> 605612493c63765d1ed1fae4416cd30225753edc
     price = db.Column(db.Integer)
     stock = db.Column(db.Integer)
 
@@ -57,6 +64,7 @@ def create_article():
 
 
 @app.route('/articles', methods=['GET'])
+<<<<<<< HEAD
 def get_articles():
     all_articles = Article.query.all()
     result = article_schema.dump(all_articles)
@@ -92,13 +100,64 @@ def update_article(sku):
 def delete_article(sku):
     article = Article.query.get(sku)
     db.session.delete(article)
+=======
+def index():
+    get_articles = Article.query.all()
+    article_schema = ArticleSchema(many=True)
+    articles = article_schema.dump(get_articles)
+    return make_response(jsonify(articles))
+
+
+@app.route('/edit/<sku>', methods=['GET'])
+def get_article_by_sku(sku):
+    get_article = Article.query.get(sku)
+    article_schema = ArticleSchema()
+    article = article_schema.dump(get_article)
+    return make_response(jsonify(article))
+
+
+@app.route('/update/<sku>', methods=['PUT'])
+def update_article_by_sku(sku):
+    data = request.get_json()
+    get_article = Article.query.get(sku)
+    if data.get('article'):
+        get_article.article = data['article']
+    if data.get('description'):
+        get_article.description = data['description']
+    if data.get('price'):
+        get_article.price = data['price']
+    if data.get('stock'):
+        get_article.stock = data['stock']
+    db.session.add(get_article)
+    db.session.commit()
+    article_schema = ArticleSchema(
+        only=['sku', 'article', 'description', 'price', 'stock'])
+    article = article_schema.dump(get_article)
+    return make_response(jsonify({article}))
+
+
+@app.route('/delete/<sku>', methods=['DELETE'])
+def delete_article_by_sku(sku):
+    get_article = Article.query.get(sku)
+    db.session.delete(get_article)
+>>>>>>> 605612493c63765d1ed1fae4416cd30225753edc
     db.session.commit()
     return article_schema.jsonify(article)
 
 
+<<<<<<< HEAD
 @app.route('/', methods=['GET'])
 def index():
     return jsonify({'message': 'Sport Center API... Wellcome'})
+=======
+@app.route('/add', methods=['POST'])
+def create_article():
+    data = request.get_json()
+    article_schema = ArticleSchema()
+    article = article_schema.load(data)
+    result = article_schema.dump(article.create())
+    return make_response(jsonify({result}), 200)
+>>>>>>> 605612493c63765d1ed1fae4416cd30225753edc
 
 
 if __name__ == "__main__":
