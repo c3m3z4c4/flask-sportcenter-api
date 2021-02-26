@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 
 class Article(db.Model):
     __tablename__ = "articles"
-    sku = db.Column(db.String(255), primary_key=True)
+    sku = db.Column(db.Integer, primary_key=True, autoincrement=True)
     article = db.Column(db.String(255))
     description = db.Column(db.String(255))
     price = db.Column(db.Integer)
