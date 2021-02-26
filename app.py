@@ -95,8 +95,8 @@ def delete_article_by_sku(sku):
 
 
 @app.route('/add', methods=['POST'])
-def create_article(payload):
-    data = request.get_json(payload)
+def create_article():
+    data = request.get_json()
     article_schema = ArticleSchema()
     article = article_schema.load(data)
     result = article_schema.dump(article.create())
