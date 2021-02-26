@@ -64,13 +64,13 @@ def get_articles():
     return jsonify(result)
 
 
-@app.route('/articles/<sku>', methods=['GET'])
+@app.route('/article/<sku>', methods=['GET'])
 def get_task(sku):
     article = Article.query.get(sku)
     return article_schema.jsonify(article)
 
 
-@app.route('/article/<id>', methods=['PUT'])
+@app.route('/article/<sku>', methods=['PUT'])
 def update_article(sku):
     article = Article.query.get(sku)
 
@@ -97,10 +97,10 @@ def delete_article(sku):
     return article_schema.jsonify(article)
 
 
-# @app.route('/', methods=['GET'])
-# def index():
-#     return jsonify({'message': 'Sport Center API... Wellcome'})
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({'message': 'Sport Center API... Wellcome'})
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
