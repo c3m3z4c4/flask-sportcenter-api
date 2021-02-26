@@ -57,7 +57,7 @@ def index():
     return make_response(jsonify(articles))
 
 
-@app.route('/articles/<sku>', methods=['GET'])
+@app.route('/edit/<sku>', methods=['GET'])
 def get_article_by_sku(sku):
     get_article = Article.query.get(sku)
     article_schema = ArticleSchema()
@@ -65,7 +65,7 @@ def get_article_by_sku(sku):
     return make_response(jsonify(article))
 
 
-@app.route('/articles/<sku>', methods=['PUT'])
+@app.route('/update/<sku>', methods=['PUT'])
 def update_article_by_sku(sku):
     data = request.get_json()
     get_article = Article.query.get(sku)
@@ -85,7 +85,7 @@ def update_article_by_sku(sku):
     return make_response(jsonify({article}))
 
 
-@app.route('/articles/<sku>', methods=['DELETE'])
+@app.route('/delete/<sku>', methods=['DELETE'])
 def delete_article_by_sku(sku):
     get_article = Article.query.get(sku)
     db.session.delete(get_article)
@@ -93,7 +93,7 @@ def delete_article_by_sku(sku):
     return make_response("", 204)
 
 
-@app.route('/articles', methods=['POST'])
+@app.route('/add', methods=['POST'])
 def create_article():
     data = request.get_json()
     article_schema = ArticleSchema()
