@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mezadigi_dbtest2:4nonimouS@mx46.hostgator.mx:3306/mezadigi_sportcenter'
 db = SQLAlchemy(app)
 
+app.secret_key = 'mysecretkey'
 ###Models####
 
 
