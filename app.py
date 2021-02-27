@@ -3,7 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mezadigi_dbtest2:4nonimouS@mx46.hostgator.mx:3306/mezadigi_sportcenter'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mezadigi_dbtest:4nonimouS@mx46.hostgator.mx:3306/mezadigi_sportcenter'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://cmeza:4nonimouS@192.168.64.3:3306/SportCenter'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -60,8 +61,9 @@ def create_article():
 @app.route('/articles', methods=['GET'])
 def get_articles():
     all_articles = Article.query.all()
-    result = articles_schema.dump(all_articles)
-    return jsonify(result)
+    artlists = articles_schema.dump(all_articles)
+    print(artlists)
+    return jsonify(artlists)
 
 
 @app.route('/article/<sku>', methods=['GET'])
@@ -72,21 +74,22 @@ def get_article(sku):
 
 @app.route('/article/<sku>', methods=['PUT'])
 def update_article(sku):
-    article = Article.query.get(sku)
-
+    updArticles = Article.query.get(sku)
+    # article = Article.query.get(sku)
+    print(updArticles)
     article = request.json['article']
     description = request.json['description']
     price = request.json['price']
     stock = request.json['stock']
 
-    article.article = article
-    article.description = description
-    article.price = price
-    article.stock = stock
+    updArticles.article = article
+    updArticles.description = description
+    updArticles.price = price
+    updArticles.stock = stock
 
     db.session.commit()
 
-    return article_schema.jsonify(article)
+    return article_schema.jsonify(updArticles)
 
 
 @app.route('/article/<sku>', methods=['DELETE'])
@@ -103,4 +106,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(port=6000, debug=True)
