@@ -3,8 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mezadigi_dbtest:4nonimouS@mx46.hostgator.mx:3306/mezadigi_sportcenter'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://cmeza:4nonimouS@192.168.64.3:3306/SportCenter'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mezadigi_dbtest:4nonimouS@mx46.hostgator.mx:3306/mezadigi_sportcenter'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://cmeza:4nonimouS@192.168.64.3:3306/SportCenter'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -75,7 +75,6 @@ def get_article(sku):
 @app.route('/article/<sku>', methods=['PUT'])
 def update_article(sku):
     updArticles = Article.query.get(sku)
-    # article = Article.query.get(sku)
     print(updArticles)
     article = request.json['article']
     description = request.json['description']
