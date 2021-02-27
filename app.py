@@ -65,7 +65,7 @@ def get_articles():
 
 
 @app.route('/article/<sku>', methods=['GET'])
-def get_task(sku):
+def get_article(sku):
     article = Article.query.get(sku)
     return article_schema.jsonify(article)
 
@@ -89,7 +89,7 @@ def update_article(sku):
     return article_schema.jsonify(article)
 
 
-@app.route('/articles/<sku>', methods=['DELETE'])
+@app.route('/article/<sku>', methods=['DELETE'])
 def delete_article(sku):
     article = Article.query.get(sku)
     db.session.delete(article)
